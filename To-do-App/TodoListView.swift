@@ -36,13 +36,18 @@ struct TodoListView: View {
                         }
                     }
                     .onDelete(perform: deleteTasks)
+                    .onMove(perform: moveTasks)
+                    
                 }
-                .listStyle(.plain)
+                .toolbar{
+                    EditButton()
+                }
             }
             .background(Color.white)
             .navigationTitle("To-Do List")
         }
     }
+    
 
     private func addTask() {
         let trimmed = newTaskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -59,6 +64,9 @@ struct TodoListView: View {
 
     private func deleteTasks(at offsets: IndexSet) {
         tasks.remove(atOffsets: offsets)
+    }
+    private func moveTasks(from source: IndexSet, to destination: Int) {
+        tasks.move(fromOffsets: source, toOffset: destination)
     }
 }
 
@@ -89,3 +97,4 @@ struct TaskRow: View {
 #Preview {
     TodoListView()
 }
+
